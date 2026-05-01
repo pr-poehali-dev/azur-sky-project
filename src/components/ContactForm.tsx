@@ -1,13 +1,31 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
+const BACKEND_URL = "https://functions.poehali.dev/5d110e86-d51e-46a6-ac90-c557d41e96e4";
+
 const ContactForm = () => {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", contact: "", desc: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Ошибка отправки");
+      setSent(true);
+    } catch {
+      setError("Не удалось отправить. Попробуйте ещё раз.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,11 +74,15 @@ const ContactForm = () => {
               onChange={(e) => setForm({ ...form, desc: e.target.value })}
               className="w-full px-5 py-3.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
             />
+            {error && (
+              <p className="text-sm text-red-400 text-center">{error}</p>
+            )}
             <button
               type="submit"
-              className="w-full py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-lg hover:shadow-primary/40 transition-all duration-200 transform hover:-translate-y-0.5"
+              disabled={loading}
+              className="w-full py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-lg hover:shadow-primary/40 transition-all duration-200 transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Отправить заявку
+              {loading ? "Отправляем..." : "Отправить заявку"}
             </button>
             <p className="text-xs text-muted-foreground text-center">
               Нажимая кнопку, вы соглашаетесь на обработку персональных данных
