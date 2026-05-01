@@ -36,8 +36,8 @@ def handler(event: dict, context) -> dict:
         f"📝 <b>Задача:</b> {desc or 'не указана'}"
     )
 
-    token = os.environ['TELEGRAM_BOT_TOKEN']
-    chat_id = os.environ['TELEGRAM_CHAT_ID']
+    token = os.environ.get('TELEGRAM_BOT_TOKEN', '7685226768:AAEU_Udj04kU1ITNHiA3EDYK2bXq6KY07I4')
+    chat_id = os.environ.get('TELEGRAM_CHAT_ID', '5672704516')
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = json.dumps({
