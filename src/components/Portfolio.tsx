@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const tabs = ["Базовый", "Стандарт", "Про"] as const;
 type Tab = typeof tabs[number];
@@ -42,20 +43,28 @@ const works: Record<Tab, { img: string; title: string; desc: string }[]> = {
   ],
 };
 
+const RevealItem = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
+  const { ref, className } = useScrollReveal(delay);
+  return <div ref={ref} className={className}>{children}</div>;
+};
+
 const Portfolio = () => {
   const [active, setActive] = useState<Tab>("Базовый");
+  const { ref: titleRef, className: titleClass } = useScrollReveal(0);
+  const { ref: headRef, className: headClass } = useScrollReveal(100);
+  const { ref: tabsRef, className: tabsClass } = useScrollReveal(180);
 
   return (
     <section id="portfolio" className="bg-background py-20 px-6">
       <div className="max-w-5xl mx-auto">
-        <p className="text-sm font-semibold tracking-widest uppercase text-primary text-center mb-3">
+        <p ref={titleRef} className={`text-sm font-semibold tracking-widest uppercase text-primary text-center mb-3 ${titleClass}`}>
           Портфолио
         </p>
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-10">
+        <h2 ref={headRef} className={`text-3xl sm:text-4xl font-bold text-foreground text-center mb-10 ${headClass}`}>
           Наши работы
         </h2>
 
-        <div className="flex items-center justify-center gap-2 mb-10 flex-wrap">
+        <div ref={tabsRef} className={`flex items-center justify-center gap-2 mb-10 flex-wrap ${tabsClass}`}>
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -73,33 +82,34 @@ const Portfolio = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {works[active].map((work, i) => (
-            <div
-              key={i}
-              className="group rounded-2xl overflow-hidden border border-border bg-card hover:-translate-y-1 transition-transform duration-300"
-            >
-              <div className="aspect-[9/14] overflow-hidden">
-                <img
-                  src={work.img}
-                  alt={work.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+            <RevealItem key={`${active}-${i}`} delay={i * 120}>
+              <div className="group rounded-2xl overflow-hidden border border-border bg-card hover:-translate-y-1 transition-transform duration-300">
+                <div className="aspect-[9/14] overflow-hidden">
+                  <img
+                    src={work.img}
+                    alt={work.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-foreground font-semibold">{work.title}</h3>
+                  <p className="text-muted-foreground text-sm mt-1">{work.desc}</p>
+                </div>
               </div>
-              <div className="p-5">
-                <h3 className="text-foreground font-semibold">{work.title}</h3>
-                <p className="text-muted-foreground text-sm mt-1">{work.desc}</p>
-              </div>
-            </div>
+            </RevealItem>
           ))}
         </div>
 
-        <div className="flex justify-center mt-10">
-          <button
-            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-lg hover:shadow-primary/40 transition-all duration-200 transform hover:-translate-y-0.5"
-          >
-            Заказать такой же
-          </button>
-        </div>
+        <RevealItem delay={300}>
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-lg hover:shadow-primary/40 transition-all duration-200 transform hover:-translate-y-0.5"
+            >
+              Заказать такой же
+            </button>
+          </div>
+        </RevealItem>
       </div>
     </section>
   );
