@@ -114,7 +114,7 @@ const ArcGalleryHero = ({
             <button onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-primary/40 hover:shadow-xl transform hover:-translate-y-0.5 font-semibold">
               Заказать монтаж
             </button>
-            <button onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-border hover:bg-accent hover:text-accent-foreground transition-all duration-200">
+            <button onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })} className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-border hover:bg-accent hover:text-accent-foreground transition-all duration-200">
               Смотреть работы
             </button>
           </div>
