@@ -83,6 +83,7 @@ const Pricing = () => {
                 ))}
               </ul>
               <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className={`w-full py-3 rounded-full font-semibold transition-all duration-200 ${
                   plan.highlight
                     ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/40"

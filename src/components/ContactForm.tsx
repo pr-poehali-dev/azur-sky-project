@@ -29,7 +29,7 @@ const ContactForm = () => {
   };
 
   return (
-    <section className="bg-card py-20 px-6">
+    <section id="contact" className="bg-card py-20 px-6">
       <div className="max-w-xl mx-auto">
         <p className="text-sm font-semibold tracking-widest uppercase text-primary text-center mb-3">
           Заявка
