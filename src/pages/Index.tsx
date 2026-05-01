@@ -3,6 +3,7 @@ import HowWeWork from "@/components/HowWeWork";
 import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import ContactForm from "@/components/ContactForm";
+import Header from "@/components/Header";
 
 const Index = () => {
   const images = [
@@ -21,6 +22,7 @@ const Index = () => {
 
   return (
     <main className="relative min-h-screen bg-background">
+      <Header />
       <ArcGalleryHero
         images={images}
         startAngle={20}
