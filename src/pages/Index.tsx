@@ -1,4 +1,8 @@
 import ArcGalleryHero from "@/components/ArcGalleryHero";
+import HowWeWork from "@/components/HowWeWork";
+import Pricing from "@/components/Pricing";
+import Testimonials from "@/components/Testimonials";
+import ContactForm from "@/components/ContactForm";
 
 const Index = () => {
   const images = [
@@ -29,6 +33,10 @@ const Index = () => {
         cardSizeSm={80}
         className="pt-16 pb-16 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24"
       />
+      <HowWeWork />
+      <Pricing />
+      <Testimonials />
+      <ContactForm />
     </main>
   );
 };
